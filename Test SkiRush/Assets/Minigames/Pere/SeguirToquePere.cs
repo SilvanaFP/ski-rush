@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SeguirToque : MonoBehaviour
+public class SeguirToquePere : MonoBehaviour
 {
     [SerializeField] private Transform objeto;
     [SerializeField] private Camera camaraPrincipal;
