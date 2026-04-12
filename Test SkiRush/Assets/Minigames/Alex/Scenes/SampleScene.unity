@@ -310,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5595844586849327997, guid: 71ea840d7906d4ec89ad436c14573961, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0298
+      value: -0.0401
       objectReference: {fileID: 0}
     - target: {fileID: 5595844586849327997, guid: 71ea840d7906d4ec89ad436c14573961, type: 3}
       propertyPath: m_LocalPosition.z
@@ -839,11 +839,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5595844586849327997, guid: 71ea840d7906d4ec89ad436c14573961, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0381
+      value: -0.0443
       objectReference: {fileID: 0}
     - target: {fileID: 5595844586849327997, guid: 71ea840d7906d4ec89ad436c14573961, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.031
+      value: -0.0389
       objectReference: {fileID: 0}
     - target: {fileID: 5595844586849327997, guid: 71ea840d7906d4ec89ad436c14573961, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1818,7 +1818,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5595844586849327997, guid: 71ea840d7906d4ec89ad436c14573961, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0384
+      value: -0.0425
       objectReference: {fileID: 0}
     - target: {fileID: 5595844586849327997, guid: 71ea840d7906d4ec89ad436c14573961, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2119,7 +2119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f09bf2560d51456590f4f10393462d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeguirToque
-  tempsInvulnerableInicial: 5
+  tempsInvulnerableInicial: 3
   textPerdut: {fileID: 1636787895}
 --- !u!4 &1106276533 stripped
 Transform:
