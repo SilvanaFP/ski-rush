@@ -58,7 +58,7 @@ public class GearGameManager : MonoBehaviour
         gameEnded = true;
         winPanel.SetActive(true);
         Debug.Log("Minijoc completat!");
-        Time.timeScale = 0f;
+        Invoke("CarregarSeguent", 2f);
     }
 
     void LoseGame()
@@ -66,6 +66,17 @@ public class GearGameManager : MonoBehaviour
         gameEnded = true;
         losePanel.SetActive(true);
         Debug.Log("Has perdut!");
-        Time.timeScale = 0f;
+        Invoke("TornarMenu", 2f);
+    }
+
+    void CarregarSeguent()
+    {
+        GameFlowManager.Instance.CarregarSeguentMinijoc();
+    }
+
+    void TornarMenu()
+    {
+        GameFlowManager.Instance.TornarMenu();
     }
 }
+

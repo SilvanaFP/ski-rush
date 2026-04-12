@@ -28,11 +28,12 @@ public class SeguirToque : MonoBehaviour
     private void Update()
     {
         timerVictoria += Time.deltaTime;
+        barraTemps.value = Mathf.Clamp01(timerVictoria / tempsVictoria);
 
         if (timerVictoria >= tempsVictoria && !jocAcabat)
         {
             Victoria();
-            barraTemps.value = timerVictoria / tempsVictoria;
+            
         }
         
         if (jocAcabat) return;
@@ -82,14 +83,20 @@ public class SeguirToque : MonoBehaviour
         Time.timeScale = 0f;
         //UnityEngine.SceneManagement.SceneManager.LoadScene("NomSeguentMinijoc");
         textPerdut.SetActive(true);
+        GameFlowManager.Instance.TornarMenu();
     }
 
     private void Victoria()
     {
         jocAcabat = true;
         Debug.Log("Has guanyat!");
-
-        Time.timeScale = 0f;
         textVictoria.SetActive(true);
+
+        Invoke(nameof(CarregarSeguentMinijoc), 2f);
+    }
+    
+    private void CarregarSeguentMinijoc()
+    {
+        GameFlowManager.Instance.CarregarSeguentMinijoc();
     }
 }

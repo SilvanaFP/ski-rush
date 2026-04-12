@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
@@ -19,6 +18,7 @@ public class WipeGameManager : MonoBehaviour
 
     private float currentTime;
     private bool finished = false;
+    private bool wonGame = false;
 
     void OnEnable()
     {
@@ -74,7 +74,7 @@ public class WipeGameManager : MonoBehaviour
             {
                 if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began)
                 {
-                    ReturnToMenu();
+                    ContinueAfterResult();
                     return;
                 }
             }
@@ -84,6 +84,7 @@ public class WipeGameManager : MonoBehaviour
     void FinishGame(bool won)
     {
         finished = true;
+        wonGame = won;
 
         if (cleaner != null)
             cleaner.enabled = false;
@@ -98,8 +99,11 @@ public class WipeGameManager : MonoBehaviour
         }
     }
 
-    void ReturnToMenu()
+    void ContinueAfterResult()
     {
-        SceneManager.LoadScene("MainMenu");
+        if (wonGame)
+            GameFlowManager.Instance.CarregarSeguentMinijoc();
+        else
+            GameFlowManager.Instance.TornarMenu();
     }
 }
