@@ -11,16 +11,30 @@ public class SeguirToque : MonoBehaviour
     [SerializeField] private float tempsInvulnerableInicial = 3f;
     private float timerInvulnerable;
     [SerializeField] private GameObject textPerdut;
+    [SerializeField] private float tempsVictoria = 15f;
+    private float timerVictoria = 0f;
+    [SerializeField] private GameObject textVictoria;
+    [SerializeField] private UnityEngine.UI.Slider barraTemps;
+
     private void Start()
     {
         camaraPrincipal = Camera.main;
         meuCollider = GetComponent<Collider2D>();
         Time.timeScale = 1f;
         timerInvulnerable = tempsInvulnerableInicial;
+        barraTemps.value = 0f;
     }
 
     private void Update()
     {
+        timerVictoria += Time.deltaTime;
+
+        if (timerVictoria >= tempsVictoria && !jocAcabat)
+        {
+            Victoria();
+            barraTemps.value = timerVictoria / tempsVictoria;
+        }
+        
         if (jocAcabat) return;
 
         if (timerInvulnerable > 0f)
@@ -66,6 +80,16 @@ public class SeguirToque : MonoBehaviour
         arrossegant = false;
         jocAcabat = true;
         Time.timeScale = 0f;
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("NomSeguentMinijoc");
         textPerdut.SetActive(true);
+    }
+
+    private void Victoria()
+    {
+        jocAcabat = true;
+        Debug.Log("Has guanyat!");
+
+        Time.timeScale = 0f;
+        textVictoria.SetActive(true);
     }
 }
