@@ -172,6 +172,7 @@ public class PathGameManager : MonoBehaviour
                 cg.interactable = false;
             }
         }
+        Invoke("CarregarSeguent", 2f);
     }
 
     float DistanceToSegment(Vector2 p, Vector2 a, Vector2 b)
@@ -291,5 +292,15 @@ public class PathGameManager : MonoBehaviour
             pathCore.SetPosition(i, pos);
             pathGlow.SetPosition(i, pos);
         }
+    }
+
+    void CarregarSeguent()
+        {
+            GameFlowManager.Instance.CarregarSeguentMinijoc();
+        }
+
+    void TornarMenu()
+    {
+        GameFlowManager.Instance.TornarMenu();
     }
 }
