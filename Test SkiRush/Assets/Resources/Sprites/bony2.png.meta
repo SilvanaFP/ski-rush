@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 38a223467916a4cd6ac1de513b85bdb2
+guid: 24dc941893f134da9af5750681dce28d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2831635263744943669
-    second: tile_0030_0
+      213: -3285562279851316663
+    second: bony2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tile_0030_0
+      name: bony2_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 0
-        width: 14
-        height: 16
+        x: 419
+        y: 489
+        width: 431
+        height: 247
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bc95303fab204b8d0800000000000000
-      internalID: -2831635263744943669
+      spriteID: 94a2a0e93865762d0800000000000000
+      internalID: -3285562279851316663
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      tile_0030_0: -2831635263744943669
+      bony2_0: -3285562279851316663
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
