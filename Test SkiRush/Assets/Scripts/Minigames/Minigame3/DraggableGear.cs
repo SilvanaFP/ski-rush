@@ -19,6 +19,8 @@ public class DraggableGear : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public float normalScale = 1f;
 
     private Vector3 startPosition;
+    private Quaternion startRotation;
+
     private RectTransform rectTransform;
     private Canvas canvas;
     private CanvasGroup canvasGroup;
@@ -32,6 +34,7 @@ public class DraggableGear : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         image = GetComponent<Image>();
 
         startPosition = rectTransform.position;
+        startRotation = rectTransform.rotation;
 
         if (image != null)
         {
@@ -81,6 +84,10 @@ public class DraggableGear : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void SnapToSlot()
     {
         rectTransform.position = correctSlot.position;
+
+        // Quan encaixa, es posa recte
+        rectTransform.rotation = Quaternion.identity;
+
         rectTransform.localScale = Vector3.one * placedScale;
         isPlaced = true;
 
@@ -93,6 +100,10 @@ public class DraggableGear : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void ReturnToStart()
     {
         rectTransform.position = startPosition;
+
+        // Si falla, torna a la rotació inicial inclinada
+        rectTransform.rotation = startRotation;
+
         rectTransform.localScale = Vector3.one * normalScale;
 
         if (image != null)
