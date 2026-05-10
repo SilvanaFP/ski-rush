@@ -8,27 +8,30 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Minigames/Pere/Settings/Scenes/URP2DSceneTemplate.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: 626ced57f3673064b980cc6e5588fca3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Minigames/Alex/Scenes/swipe1.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Minigames/Silvana/Scenes/drag1.unity
     guid: 9843a5cf40bac35189c524f1ef1fc1f4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Minigames/Pere/Scenes/wipe1.unity
     guid: e907a4ebd0927624c9ef6ef94917b9ad
   - enabled: 1
     path: Assets/Minigames/Pere/Scenes/wipe2.unity
     guid: 7c657d5bac07eb146adf634134b5ccc7
+<<<<<<< Updated upstream
   - enabled: 1
     path: Assets/Minigames/Alex/Scenes/retrack.unity
     guid: 14e7c320507ce4604966f406e6094ab9
   - enabled: 1
     path: Assets/Minigames/Silvana/Scenes/drag2.unity
     guid: cf1402b43f205ae4c94913ff5e3b335b
+=======
+>>>>>>> Stashed changes
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   m_UseUCBPForAssetBundles: 0
