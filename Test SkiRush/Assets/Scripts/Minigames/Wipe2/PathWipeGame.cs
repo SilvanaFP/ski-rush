@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UI;
+using TMPro;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class PathGameManager : MonoBehaviour
@@ -14,11 +15,18 @@ public class PathGameManager : MonoBehaviour
     public Transform treesParent;
     public Camera cam;
 
+    [Header("UI")]
+    public Image timeBarFill;
+    public TextMeshProUGUI resultText;
+    public GameObject resultOverlay;
+
     [Header("Settings")]
     public float startTolerance = 120f;
     public float eraseRadius = 50f;
 
-    // 👇 SOLO ESTO EN CATALÁN
+    [Header("Time Settings")]
+    public float timeLimit = 5f;
+
     public enum PathPattern
     {
         Sinusoide,
@@ -36,6 +44,9 @@ public class PathGameManager : MonoBehaviour
     private bool gameStarted = false;
     private bool gameFinished = false;
     private bool startedTouch = false;
+    private bool wonGame = false;
+
+    private float currentTime;
 
     float startY;
     float endY;
@@ -43,6 +54,11 @@ public class PathGameManager : MonoBehaviour
     void OnEnable()
     {
         EnhancedTouchSupport.Enable();
+    }
+
+    void OnDisable()
+    {
+        EnhancedTouchSupport.Disable();
     }
 
     void Start()
@@ -54,19 +70,56 @@ public class PathGameManager : MonoBehaviour
         pathGlow.positionCount = 0;
         playerTrace.positionCount = 0;
 
+        currentTime = timeLimit;
+
+        if (timeBarFill != null)
+            timeBarFill.fillAmount = 1f;
+
+        if (resultText != null)
+            resultText.gameObject.SetActive(false);
+
+        if (resultOverlay != null)
+            resultOverlay.SetActive(false);
+
         StartGame();
     }
 
     void Update()
     {
-        if (!gameStarted || gameFinished) return;
-
-        foreach (var touch in Touch.activeTouches)
+        if (!gameFinished)
         {
-            if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved ||
-                touch.phase == UnityEngine.InputSystem.TouchPhase.Began)
+            currentTime -= Time.deltaTime;
+
+            if (currentTime < 0f)
+                currentTime = 0f;
+
+            if (timeBarFill != null)
+                timeBarFill.fillAmount = currentTime / timeLimit;
+
+            if (currentTime <= 0f)
             {
-                HandleInput(touch.screenPosition);
+                FinishGame(false);
+                return;
+            }
+
+            foreach (var touch in Touch.activeTouches)
+            {
+                if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved ||
+                    touch.phase == UnityEngine.InputSystem.TouchPhase.Began)
+                {
+                    HandleInput(touch.screenPosition);
+                }
+            }
+        }
+        else
+        {
+            foreach (var touch in Touch.activeTouches)
+            {
+                if (touch.phase == UnityEngine.InputSystem.TouchPhase.Began)
+                {
+                    ContinueAfterResult();
+                    return;
+                }
             }
         }
     }
@@ -103,76 +156,100 @@ public class PathGameManager : MonoBehaviour
         if (progress >= 0.95f)
         {
             Debug.Log("FINISH");
-            FinishGame();
+            FinishGame(true);
         }
     }
 
-    void FinishGame()
+    void FinishGame(bool won)
     {
         gameFinished = true;
+        wonGame = won;
 
-        foreach (var tree in trees)
+        if (won)
         {
-            if (tree == null || !tree.activeSelf) continue;
-
-            RectTransform rect = tree.GetComponent<RectTransform>();
-            Vector2 treeScreen = RectTransformUtility.WorldToScreenPoint(cam, rect.position);
-
-            bool shouldDelete = false;
-
-            for (int i = 0; i < playerPoints.Count - 2; i++)
+            foreach (var tree in trees)
             {
-                float dynamicRadius = eraseRadius;
+                if (tree == null || !tree.activeSelf) continue;
 
-                if (i > 0)
+                RectTransform rect = tree.GetComponent<RectTransform>();
+                Vector2 treeScreen = RectTransformUtility.WorldToScreenPoint(cam, rect.position);
+
+                bool shouldDelete = false;
+
+                for (int i = 0; i < playerPoints.Count - 2; i++)
                 {
-                    Vector2 dir1 = (playerPoints[i] - playerPoints[i - 1]).normalized;
-                    Vector2 dir2 = (playerPoints[i + 1] - playerPoints[i]).normalized;
+                    float dynamicRadius = eraseRadius;
 
-                    float angle = Vector2.Angle(dir1, dir2);
+                    if (i > 0)
+                    {
+                        Vector2 dir1 = (playerPoints[i] - playerPoints[i - 1]).normalized;
+                        Vector2 dir2 = (playerPoints[i + 1] - playerPoints[i]).normalized;
 
-                    if (angle > 20f)
-                        dynamicRadius *= 1.5f;
-                }
+                        float angle = Vector2.Angle(dir1, dir2);
 
-                float dist = DistanceToSegment(treeScreen, playerPoints[i], playerPoints[i + 1]);
+                        if (angle > 20f)
+                            dynamicRadius *= 1.5f;
+                    }
 
-                if (dist < dynamicRadius)
-                {
-                    shouldDelete = true;
-                    break;
-                }
-            }
+                    float dist = DistanceToSegment(treeScreen, playerPoints[i], playerPoints[i + 1]);
 
-            if (!shouldDelete)
-            {
-                for (int i = 0; i < pathPoints.Count - 1; i++)
-                {
-                    float dist = DistanceToSegment(treeScreen, pathPoints[i], pathPoints[i + 1]);
-
-                    if (dist < eraseRadius * 0.8f)
+                    if (dist < dynamicRadius)
                     {
                         shouldDelete = true;
                         break;
                     }
                 }
-            }
 
-            if (shouldDelete)
-            {
-                Image img = tree.GetComponent<Image>();
-                if (img != null)
-                    img.enabled = false;
+                if (!shouldDelete)
+                {
+                    for (int i = 0; i < pathPoints.Count - 1; i++)
+                    {
+                        float dist = DistanceToSegment(treeScreen, pathPoints[i], pathPoints[i + 1]);
 
-                CanvasGroup cg = tree.GetComponent<CanvasGroup>();
-                if (cg == null)
-                    cg = tree.AddComponent<CanvasGroup>();
+                        if (dist < eraseRadius * 0.8f)
+                        {
+                            shouldDelete = true;
+                            break;
+                        }
+                    }
+                }
 
-                cg.blocksRaycasts = false;
-                cg.interactable = false;
+                if (shouldDelete)
+                {
+                    Image img = tree.GetComponent<Image>();
+                    if (img != null)
+                        img.enabled = false;
+
+                    CanvasGroup cg = tree.GetComponent<CanvasGroup>();
+                    if (cg == null)
+                        cg = tree.AddComponent<CanvasGroup>();
+
+                    cg.blocksRaycasts = false;
+                    cg.interactable = false;
+                }
             }
         }
+<<<<<<< HEAD
         Invoke("CarregarSeguent", 2f);
+=======
+
+        if (resultOverlay != null)
+            resultOverlay.SetActive(true);
+
+        if (resultText != null)
+        {
+            resultText.gameObject.SetActive(true);
+            resultText.text = won ? "Has guanyat!" : "Has perdut!";
+        }
+    }
+
+    void ContinueAfterResult()
+    {
+        if (wonGame)
+            GameFlowManager.Instance.CarregarSeguentMinijoc();
+        else
+            GameFlowManager.Instance.TornarMenu();
+>>>>>>> 5f3f3f4 (Jocs nous junts)
     }
 
     float DistanceToSegment(Vector2 p, Vector2 a, Vector2 b)
@@ -293,6 +370,7 @@ public class PathGameManager : MonoBehaviour
             pathGlow.SetPosition(i, pos);
         }
     }
+<<<<<<< HEAD
 
     void CarregarSeguent()
         {
@@ -303,4 +381,6 @@ public class PathGameManager : MonoBehaviour
     {
         GameFlowManager.Instance.TornarMenu();
     }
+=======
+>>>>>>> 5f3f3f4 (Jocs nous junts)
 }

@@ -6,7 +6,11 @@ public class GameFlowManager : MonoBehaviour
 {
     public static GameFlowManager Instance;
 
+<<<<<<< HEAD
     private List<string> minijocsOriginals = new List<string> { "swipe1", "drag1", "wipe1", "wipe2" };
+=======
+    private List<string> minijocsOriginals = new List<string> { "swipe1", "drag1", "wipe1", "wipe2", "retrack", "drag2" };
+>>>>>>> 5f3f3f4 (Jocs nous junts)
     private List<string> cuaMinijocs = new List<string>();
 
     private void Awake()
