@@ -1996,7 +1996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RetrackGameManager
   maxBonysPerduts: 10
   bonysMinimsPerGuanyar: 20
-  tempsJoc: 60
+  tempsJoc: 15
   barraTemps: {fileID: 144132120}
   textVictoria: {fileID: 171323216}
   textPerdut: {fileID: 1636787895}
