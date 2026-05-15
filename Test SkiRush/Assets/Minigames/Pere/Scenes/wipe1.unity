@@ -303,11 +303,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WipeGameManager
   timeLimit: 10
-  requiredCleanPercent: 75
+  requiredCleanPercent: 70
   timeBarFill: {fileID: 296738048}
   cleaner: {fileID: 1258337339}
   resultText: {fileID: 1602284698}
   resultOverlay: {fileID: 880553639}
+  tempsEsperaDespresResultat: 1.5
 --- !u!4 &316801704
 Transform:
   m_ObjectHideFlags: 0

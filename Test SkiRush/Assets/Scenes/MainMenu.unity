@@ -496,6 +496,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 693ec906b40ef40e4b2ca34b72c7a90c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameFlowManager
+  minijocsOriginals:
+  - swipe1
+  - drag1
+  - wipe1
+  - wipe2
+  - retrack
+  - drag2
+  configuracionsMinijocs:
+  - nomEscena: swipe1
+    tempsBase: 15
+    tempsMinim: 8
+    reduccioTempsPerDificultat: 0
+    velocitatBase: 5
+    velocitatMaxima: 15
+    incrementVelocitatPerDificultat: 1
+    errorsPermesosBase: 1
+    errorsMinims: 1
+    baixarErrorsCadaNivells: 2
+  - nomEscena: retrack
+    tempsBase: 20
+    tempsMinim: 15
+    reduccioTempsPerDificultat: 0
+    velocitatBase: 5
+    velocitatMaxima: 15
+    incrementVelocitatPerDificultat: 1
+    errorsPermesosBase: 6
+    errorsMinims: 2
+    baixarErrorsCadaNivells: 1
+  - nomEscena: drag1
+    tempsBase: 8
+    tempsMinim: 4
+    reduccioTempsPerDificultat: 1
+    velocitatBase: 1
+    velocitatMaxima: 1
+    incrementVelocitatPerDificultat: 0
+    errorsPermesosBase: 1
+    errorsMinims: 1
+    baixarErrorsCadaNivells: 2
+  - nomEscena: drag2
+    tempsBase: 8
+    tempsMinim: 4
+    reduccioTempsPerDificultat: 1
+    velocitatBase: 1
+    velocitatMaxima: 1
+    incrementVelocitatPerDificultat: 0
+    errorsPermesosBase: 1
+    errorsMinims: 1
+    baixarErrorsCadaNivells: 2
+  - nomEscena: wipe1
+    tempsBase: 10
+    tempsMinim: 5
+    reduccioTempsPerDificultat: 0.5
+    velocitatBase: 1
+    velocitatMaxima: 1
+    incrementVelocitatPerDificultat: 0
+    errorsPermesosBase: 1
+    errorsMinims: 1
+    baixarErrorsCadaNivells: 2
+  - nomEscena: wipe2
+    tempsBase: 10
+    tempsMinim: 5
+    reduccioTempsPerDificultat: 0.5
+    velocitatBase: 1
+    velocitatMaxima: 1
+    incrementVelocitatPerDificultat: 0
+    errorsPermesosBase: 1
+    errorsMinims: 1
+    baixarErrorsCadaNivells: 2
+  videsInicials: 3
+  pujarDificultatCada: 2
 --- !u!4 &845254421
 Transform:
   m_ObjectHideFlags: 0

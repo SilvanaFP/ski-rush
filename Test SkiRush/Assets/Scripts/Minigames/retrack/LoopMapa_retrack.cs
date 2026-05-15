@@ -7,6 +7,17 @@ public class LoopMapa_retrack : MonoBehaviour
     [SerializeField] private float limiteInferior = -8f;
     [SerializeField] private Transform[] chunks;
 
+    private void Start()
+    {
+        if (GameFlowManager.Instance != null)
+        {
+            MinijocRuntimeConfig config = GameFlowManager.Instance.GetConfigActual();
+            velocidad = config.velocitat;
+
+            Debug.Log("Velocitat del mapa retrack configurada a: " + velocidad);
+        }
+    }
+
     private void Update()
     {
         for (int i = 0; i < chunks.Length; i++)
