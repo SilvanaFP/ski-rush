@@ -1,46 +1,101 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GearGameManager : MonoBehaviour
 {
+    [Header("Peces")]
     public DraggableGear[] gears;
+
+    [Header("UI")]
     public GameObject winPanel;
     public GameObject losePanel;
-
     public TextMeshProUGUI timerText;
-    public float timeLeft = 7f;
+    public Image timeBarFill;
+
+    [Header("Temps")]
+    [SerializeField] private float timeLeft = 7f;
+    private float tempsInicial;
+
+    [Header("Transició")]
+    [SerializeField] private float tempsEsperaDespresResultat = 1.5f;
 
     private bool gameEnded = false;
 
-    void Update()
+    private void Start()
     {
-        if (gameEnded)
-            return;
+        Time.timeScale = 1f;
+        gameEnded = false;
+
+        if (GameFlowManager.Instance != null)
+        {
+            MinijocRuntimeConfig config = GameFlowManager.Instance.GetConfigActual();
+            timeLeft = config.temps;
+
+            Debug.Log("Config drag - Temps: " + config.temps +
+                      " | Dificultat: " + config.dificultat +
+                      " | Vides: " + config.vides);
+        }
+
+        tempsInicial = timeLeft;
+
+        if (winPanel != null)
+        {
+            winPanel.SetActive(false);
+        }
+
+        if (losePanel != null)
+        {
+            losePanel.SetActive(false);
+        }
+
+        ActualitzarUI();
+    }
+
+    private void Update()
+    {
+        if (gameEnded) return;
 
         timeLeft -= Time.deltaTime;
 
         if (timeLeft <= 0)
         {
             timeLeft = 0;
-            timerText.text = "00:00";
+            ActualitzarUI();
             LoseGame();
             return;
         }
 
-        UpdateTimerUI();
+        ActualitzarUI();
     }
 
-    void UpdateTimerUI()
+    private void ActualitzarUI()
     {
+        ActualitzarTimerText();
+        ActualitzarBarraTemps();
+    }
+
+    private void ActualitzarTimerText()
+    {
+        if (timerText == null) return;
+
         int minutes = Mathf.FloorToInt(timeLeft / 60);
         int seconds = Mathf.FloorToInt(timeLeft % 60);
+
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    private void ActualitzarBarraTemps()
+    {
+        if (timeBarFill == null) return;
+        if (tempsInicial <= 0f) return;
+
+        timeBarFill.fillAmount = Mathf.Clamp01(timeLeft / tempsInicial);
     }
 
     public void CheckWin()
     {
-        if (gameEnded)
-            return;
+        if (gameEnded) return;
 
         foreach (DraggableGear gear in gears)
         {
@@ -53,30 +108,45 @@ public class GearGameManager : MonoBehaviour
         WinGame();
     }
 
-    void WinGame()
+    private void WinGame()
     {
+        if (gameEnded) return;
+
         gameEnded = true;
-        winPanel.SetActive(true);
-        Debug.Log("Minijoc completat!");
-        Invoke("CarregarSeguent", 2f);
+
+        if (winPanel != null)
+        {
+            winPanel.SetActive(true);
+        }
+
+        Debug.Log("Minijoc drag completat!");
+
+        Invoke(nameof(NotificarVictoriaAlGameManager), tempsEsperaDespresResultat);
     }
 
-    void LoseGame()
+    private void LoseGame()
     {
+        if (gameEnded) return;
+
         gameEnded = true;
-        losePanel.SetActive(true);
-        Debug.Log("Has perdut!");
-        Invoke("TornarMenu", 2f);
+
+        if (losePanel != null)
+        {
+            losePanel.SetActive(true);
+        }
+
+        Debug.Log("Has perdut el minijoc drag!");
+
+        Invoke(nameof(NotificarDerrotaAlGameManager), tempsEsperaDespresResultat);
     }
 
-    void CarregarSeguent()
+    private void NotificarVictoriaAlGameManager()
     {
-        GameFlowManager.Instance.CarregarSeguentMinijoc();
+        GameFlowManager.Instance.MinijocGuanyat();
     }
 
-    void TornarMenu()
+    private void NotificarDerrotaAlGameManager()
     {
-        GameFlowManager.Instance.TornarMenu();
+        GameFlowManager.Instance.MinijocPerdut();
     }
 }
-

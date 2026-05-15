@@ -5,13 +5,15 @@ public class RetrackGameManager : MonoBehaviour
 {
     [Header("Configuració")]
     [SerializeField] private int maxBonysPerduts = 4;
-    [SerializeField] private int bonysMinimsPerGuanyar = 10;
     [SerializeField] private float tempsJoc = 20f;
 
     [Header("UI")]
     [SerializeField] private Slider barraTemps;
     [SerializeField] private GameObject textVictoria;
     [SerializeField] private GameObject textPerdut;
+
+    [Header("Transició")]
+    [SerializeField] private float tempsEsperaDespresResultat = 1.5f;
 
     private int bonysXafats = 0;
     private int bonysPerduts = 0;
@@ -20,8 +22,27 @@ public class RetrackGameManager : MonoBehaviour
 
     private void Start()
     {
-        tempsActual = tempsJoc;
         Time.timeScale = 1f;
+
+        bonysXafats = 0;
+        bonysPerduts = 0;
+        jocAcabat = false;
+
+        if (GameFlowManager.Instance != null)
+        {
+            MinijocRuntimeConfig config = GameFlowManager.Instance.GetConfigActual();
+
+            tempsJoc = config.temps;
+            maxBonysPerduts = config.errorsPermesos;
+
+            Debug.Log("Config retrack - Temps: " + config.temps +
+                      " | Velocitat: " + config.velocitat +
+                      " | Errors permesos: " + config.errorsPermesos +
+                      " | Dificultat: " + config.dificultat +
+                      " | Vides: " + config.vides);
+        }
+
+        tempsActual = tempsJoc;
 
         if (barraTemps != null)
         {
@@ -69,7 +90,7 @@ public class RetrackGameManager : MonoBehaviour
         if (jocAcabat) return;
 
         bonysPerduts++;
-        Debug.Log("Bonys perduts: " + bonysPerduts);
+        Debug.Log("Bonys perduts: " + bonysPerduts + " / " + maxBonysPerduts);
 
         if (bonysPerduts >= maxBonysPerduts)
         {
@@ -79,18 +100,13 @@ public class RetrackGameManager : MonoBehaviour
 
     private void ComprovarFinal()
     {
-        if (bonysXafats >= bonysMinimsPerGuanyar)
-        {
-            Guanyar();
-        }
-        else
-        {
-            Perdre();
-        }
+        Guanyar();
     }
 
     private void Guanyar()
     {
+        if (jocAcabat) return;
+
         jocAcabat = true;
         Debug.Log("Has guanyat el minijoc retrack!");
 
@@ -99,11 +115,13 @@ public class RetrackGameManager : MonoBehaviour
             textVictoria.SetActive(true);
         }
 
-        Invoke(nameof(CarregarSeguent), 2f);
+        Invoke(nameof(NotificarVictoriaAlGameManager), tempsEsperaDespresResultat);
     }
 
     private void Perdre()
     {
+        if (jocAcabat) return;
+
         jocAcabat = true;
         Debug.Log("Has perdut el minijoc retrack!");
 
@@ -112,16 +130,16 @@ public class RetrackGameManager : MonoBehaviour
             textPerdut.SetActive(true);
         }
 
-        Invoke(nameof(TornarMenu), 2f);
+        Invoke(nameof(NotificarDerrotaAlGameManager), tempsEsperaDespresResultat);
     }
 
-    private void CarregarSeguent()
+    private void NotificarVictoriaAlGameManager()
     {
-        GameFlowManager.Instance.CarregarSeguentMinijoc();
+        GameFlowManager.Instance.MinijocGuanyat();
     }
 
-    private void TornarMenu()
+    private void NotificarDerrotaAlGameManager()
     {
-        GameFlowManager.Instance.TornarMenu();
+        GameFlowManager.Instance.MinijocPerdut();
     }
 }
