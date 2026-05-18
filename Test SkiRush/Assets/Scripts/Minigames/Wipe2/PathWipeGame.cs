@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
-public class PathGameManager : MonoBehaviour
+public class PathWipeGame : MonoBehaviour
 {
     [Header("References")]
     public LineRenderer pathCore;
@@ -21,11 +22,14 @@ public class PathGameManager : MonoBehaviour
     public GameObject resultOverlay;
 
     [Header("Settings")]
-    public float startTolerance = 120f;
-    public float eraseRadius = 50f;
+    public float startTolerance = 40f;
+    public float eraseRadius = 40;
+
+    [Header("Lose Settings")]
+    public float maxDeviation = 55;
 
     [Header("Time Settings")]
-    [SerializeField] private float timeLimit = 5f;
+    public float timeLimit = 5f;
 
     [Header("Transició")]
     [SerializeField] private float tempsEsperaDespresResultat = 1.5f;
@@ -44,9 +48,9 @@ public class PathGameManager : MonoBehaviour
     private List<Vector2> playerPoints = new List<Vector2>();
     private List<GameObject> trees = new List<GameObject>();
 
+    private bool gameStarted = false;
     private bool gameFinished = false;
     private bool startedTouch = false;
-    private bool wonGame = false;
 
     private float currentTime;
 
@@ -65,83 +69,39 @@ public class PathGameManager : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 1f;
+        foreach (Transform t in treesParent)
+            trees.Add(t.gameObject);
 
-        gameFinished = false;
-        startedTouch = false;
-        wonGame = false;
-
-        if (GameFlowManager.Instance != null)
-        {
-            MinijocRuntimeConfig config = GameFlowManager.Instance.GetConfigActual();
-
-            timeLimit = config.temps;
-
-            Debug.Log("Config wipe2 - Temps: " + config.temps +
-                      " | Dificultat: " + config.dificultat +
-                      " | Vides: " + config.vides);
-        }
-
-        trees.Clear();
-
-        if (treesParent != null)
-        {
-            foreach (Transform t in treesParent)
-            {
-                trees.Add(t.gameObject);
-            }
-        }
-
-        if (pathCore != null)
-        {
-            pathCore.positionCount = 0;
-        }
-
-        if (pathGlow != null)
-        {
-            pathGlow.positionCount = 0;
-        }
-
-        if (playerTrace != null)
-        {
-            playerTrace.positionCount = 0;
-        }
+        pathCore.positionCount = 0;
+        pathGlow.positionCount = 0;
+        playerTrace.positionCount = 0;
 
         currentTime = timeLimit;
 
         if (timeBarFill != null)
-        {
             timeBarFill.fillAmount = 1f;
-        }
 
         if (resultText != null)
-        {
             resultText.gameObject.SetActive(false);
-        }
 
         if (resultOverlay != null)
-        {
             resultOverlay.SetActive(false);
-        }
 
         StartGame();
     }
 
     void Update()
     {
-        if (gameFinished) return;
+        if (gameFinished)
+            return;
 
         currentTime -= Time.deltaTime;
 
         if (currentTime < 0f)
-        {
             currentTime = 0f;
-        }
 
         if (timeBarFill != null)
-        {
             timeBarFill.fillAmount = currentTime / timeLimit;
-        }
 
         if (currentTime <= 0f)
         {
@@ -149,6 +109,10 @@ public class PathGameManager : MonoBehaviour
             return;
         }
 
+        if (!gameStarted)
+            return;
+
+        // MOBILE INPUT
         foreach (var touch in Touch.activeTouches)
         {
             if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved ||
@@ -157,28 +121,45 @@ public class PathGameManager : MonoBehaviour
                 HandleInput(touch.screenPosition);
             }
         }
+
+#if UNITY_EDITOR || UNITY_STANDALONE
+
+        // PC INPUT
+        if (Mouse.current != null &&
+            Mouse.current.leftButton.isPressed)
+        {
+            HandleInput(Mouse.current.position.ReadValue());
+        }
+
+#endif
     }
 
     void HandleInput(Vector2 screenPos)
     {
-        if (cam == null) return;
-        if (playerTrace == null) return;
+        Vector3 worldPos = cam.ScreenToWorldPoint(
+            new Vector3(screenPos.x, screenPos.y, 10f)
+        );
 
-        Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 10f));
         worldPos.z = 0;
 
         playerTrace.positionCount++;
-        playerTrace.SetPosition(playerTrace.positionCount - 1, worldPos);
+        playerTrace.SetPosition(
+            playerTrace.positionCount - 1,
+            worldPos
+        );
 
         playerPoints.Add(screenPos);
 
         CheckProgress(screenPos);
+
+        if (!gameFinished)
+        {
+            CheckDeviation(screenPos);
+        }
     }
 
     void CheckProgress(Vector2 screenPos)
     {
-        if (pathPoints.Count == 0) return;
-
         if (!startedTouch)
         {
             float safeStartY = pathPoints[0].y - startTolerance;
@@ -192,12 +173,41 @@ public class PathGameManager : MonoBehaviour
             return;
         }
 
-        float progress = Mathf.InverseLerp(startY, endY, screenPos.y);
+        float progress = Mathf.InverseLerp(
+            startY,
+            endY,
+            screenPos.y
+        );
 
-        if (progress >= 0.95f)
+        if (progress >= 0.95f && !gameFinished)
         {
-            Debug.Log("FINISH");
             FinishGame(true);
+            return;
+        }
+    }
+
+    void CheckDeviation(Vector2 screenPos)
+    {
+        if (!startedTouch || gameFinished)
+            return;
+
+        float minDist = Mathf.Infinity;
+
+        for (int i = 0; i < pathPoints.Count - 1; i++)
+        {
+            float dist = DistanceToSegment(
+                screenPos,
+                pathPoints[i],
+                pathPoints[i + 1]
+            );
+
+            if (dist < minDist)
+                minDist = dist;
+        }
+
+        if (minDist > maxDeviation)
+        {
+            FinishGame(false);
         }
     }
 
@@ -206,17 +216,93 @@ public class PathGameManager : MonoBehaviour
         if (gameFinished) return;
 
         gameFinished = true;
-        wonGame = won;
 
         if (won)
         {
-            EsborrarArbresDelCami();
+            foreach (var tree in trees)
+            {
+                if (tree == null || !tree.activeSelf)
+                    continue;
+
+                RectTransform rect = tree.GetComponent<RectTransform>();
+
+                Vector2 treeScreen =
+                    RectTransformUtility.WorldToScreenPoint(
+                        cam,
+                        rect.position
+                    );
+
+                bool shouldDelete = false;
+
+                for (int i = 0; i < playerPoints.Count - 2; i++)
+                {
+                    float dynamicRadius = eraseRadius;
+
+                    if (i > 0)
+                    {
+                        Vector2 dir1 =
+                            (playerPoints[i] - playerPoints[i - 1]).normalized;
+
+                        Vector2 dir2 =
+                            (playerPoints[i + 1] - playerPoints[i]).normalized;
+
+                        float angle = Vector2.Angle(dir1, dir2);
+
+                        if (angle > 20f)
+                            dynamicRadius *= 1.5f;
+                    }
+
+                    float dist = DistanceToSegment(
+                        treeScreen,
+                        playerPoints[i],
+                        playerPoints[i + 1]
+                    );
+
+                    if (dist < dynamicRadius)
+                    {
+                        shouldDelete = true;
+                        break;
+                    }
+                }
+
+                if (!shouldDelete)
+                {
+                    for (int i = 0; i < pathPoints.Count - 1; i++)
+                    {
+                        float dist = DistanceToSegment(
+                            treeScreen,
+                            pathPoints[i],
+                            pathPoints[i + 1]
+                        );
+
+                        if (dist < eraseRadius * 0.8f)
+                        {
+                            shouldDelete = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (shouldDelete)
+                {
+                    Image img = tree.GetComponent<Image>();
+
+                    if (img != null)
+                        img.enabled = false;
+
+                    CanvasGroup cg = tree.GetComponent<CanvasGroup>();
+
+                    if (cg == null)
+                        cg = tree.AddComponent<CanvasGroup>();
+
+                    cg.blocksRaycasts = false;
+                    cg.interactable = false;
+                }
+            }
         }
 
         if (resultOverlay != null)
-        {
             resultOverlay.SetActive(true);
-        }
 
         if (resultText != null)
         {
@@ -226,86 +312,13 @@ public class PathGameManager : MonoBehaviour
 
         if (won)
         {
-            Debug.Log("Has guanyat el minijoc wipe2!");
+            Debug.Log("Has guanyat el PathWipe!");
             Invoke(nameof(NotificarVictoriaAlGameManager), tempsEsperaDespresResultat);
         }
         else
         {
-            Debug.Log("Has perdut el minijoc wipe2!");
+            Debug.Log("Has perdut el PathWipe!");
             Invoke(nameof(NotificarDerrotaAlGameManager), tempsEsperaDespresResultat);
-        }
-    }
-
-    void EsborrarArbresDelCami()
-    {
-        foreach (var tree in trees)
-        {
-            if (tree == null || !tree.activeSelf) continue;
-
-            RectTransform rect = tree.GetComponent<RectTransform>();
-            if (rect == null) continue;
-
-            Vector2 treeScreen = RectTransformUtility.WorldToScreenPoint(cam, rect.position);
-
-            bool shouldDelete = false;
-
-            for (int i = 0; i < playerPoints.Count - 2; i++)
-            {
-                float dynamicRadius = eraseRadius;
-
-                if (i > 0)
-                {
-                    Vector2 dir1 = (playerPoints[i] - playerPoints[i - 1]).normalized;
-                    Vector2 dir2 = (playerPoints[i + 1] - playerPoints[i]).normalized;
-
-                    float angle = Vector2.Angle(dir1, dir2);
-
-                    if (angle > 20f)
-                    {
-                        dynamicRadius *= 1.5f;
-                    }
-                }
-
-                float dist = DistanceToSegment(treeScreen, playerPoints[i], playerPoints[i + 1]);
-
-                if (dist < dynamicRadius)
-                {
-                    shouldDelete = true;
-                    break;
-                }
-            }
-
-            if (!shouldDelete)
-            {
-                for (int i = 0; i < pathPoints.Count - 1; i++)
-                {
-                    float dist = DistanceToSegment(treeScreen, pathPoints[i], pathPoints[i + 1]);
-
-                    if (dist < eraseRadius * 0.8f)
-                    {
-                        shouldDelete = true;
-                        break;
-                    }
-                }
-            }
-
-            if (shouldDelete)
-            {
-                Image img = tree.GetComponent<Image>();
-                if (img != null)
-                {
-                    img.enabled = false;
-                }
-
-                CanvasGroup cg = tree.GetComponent<CanvasGroup>();
-                if (cg == null)
-                {
-                    cg = tree.AddComponent<CanvasGroup>();
-                }
-
-                cg.blocksRaycasts = false;
-                cg.interactable = false;
-            }
         }
     }
 
@@ -323,21 +336,20 @@ public class PathGameManager : MonoBehaviour
     {
         Vector2 ab = b - a;
 
-        if (ab.sqrMagnitude <= 0.001f)
-        {
-            return Vector2.Distance(p, a);
-        }
-
         float t = Vector2.Dot(p - a, ab) / ab.sqrMagnitude;
         t = Mathf.Clamp01(t);
 
         Vector2 closest = a + t * ab;
+
         return Vector2.Distance(p, closest);
     }
 
     void StartGame()
     {
-        currentPattern = (PathPattern)Random.Range(0, 4);
+        gameStarted = true;
+
+        currentPattern =
+            (PathPattern)Random.Range(0, 4);
 
         GeneratePath();
         DrawPath();
@@ -378,8 +390,13 @@ public class PathGameManager : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             float t = i / 9f;
+
             float y = Mathf.Lerp(h, 0, t);
-            float x = Screen.width / 2f + Mathf.Sin(t * Mathf.PI * 2f) * w * 0.5f;
+
+            float x =
+                Screen.width / 2f +
+                Mathf.Sin(t * Mathf.PI * 2f) *
+                w * 0.5f;
 
             pathPoints.Add(new Vector2(x, y));
         }
@@ -392,8 +409,13 @@ public class PathGameManager : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             float t = i / 9f;
+
             float y = Mathf.Lerp(h, 0, t);
-            float x = (i % 2 == 0) ? Screen.width * 0.2f : Screen.width * 0.8f;
+
+            float x =
+                (i % 2 == 0)
+                ? Screen.width * 0.2f
+                : Screen.width * 0.8f;
 
             pathPoints.Add(new Vector2(x, y));
         }
@@ -406,8 +428,14 @@ public class PathGameManager : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             float t = i / 9f;
+
             float y = Mathf.Lerp(h, 0, t);
-            float x = Mathf.Lerp(Screen.width * 0.3f, Screen.width * 0.7f, t);
+
+            float x = Mathf.Lerp(
+                Screen.width * 0.3f,
+                Screen.width * 0.7f,
+                t
+            );
 
             pathPoints.Add(new Vector2(x, y));
         }
@@ -421,8 +449,13 @@ public class PathGameManager : MonoBehaviour
         for (int i = 0; i < 12; i++)
         {
             float t = i / 11f;
+
             float y = Mathf.Lerp(h, 0, t);
-            float x = Screen.width / 2f + Mathf.Sin(t * Mathf.PI * 4f) * w * 0.3f;
+
+            float x =
+                Screen.width / 2f +
+                Mathf.Sin(t * Mathf.PI * 4f) *
+                w * 0.3f;
 
             pathPoints.Add(new Vector2(x, y));
         }
@@ -430,14 +463,20 @@ public class PathGameManager : MonoBehaviour
 
     void DrawPath()
     {
-        if (pathCore == null || pathGlow == null || cam == null) return;
-
         pathCore.positionCount = pathPoints.Count;
         pathGlow.positionCount = pathPoints.Count;
 
         for (int i = 0; i < pathPoints.Count; i++)
         {
-            Vector3 pos = cam.ScreenToWorldPoint(new Vector3(pathPoints[i].x, pathPoints[i].y, 10f));
+            Vector3 pos =
+                cam.ScreenToWorldPoint(
+                    new Vector3(
+                        pathPoints[i].x,
+                        pathPoints[i].y,
+                        10f
+                    )
+                );
+
             pos.z = 0;
 
             pathCore.SetPosition(i, pos);

@@ -55,6 +55,14 @@ public class WipeCleaner : MonoBehaviour
         {
             TryErase(finger.screenPosition);
         }
+
+    #if UNITY_EDITOR || UNITY_STANDALONE
+        if (UnityEngine.InputSystem.Mouse.current != null &&
+            UnityEngine.InputSystem.Mouse.current.leftButton.isPressed)
+        {
+            TryErase(UnityEngine.InputSystem.Mouse.current.position.ReadValue());
+        }
+    #endif
     }
 
     public void GenerateSnowTexture()
