@@ -60,4 +60,9 @@ public class LoopMapa_retrack : MonoBehaviour
 
         return mesAmunt;
     }
+
+    public void AturarMoviment()
+    {
+        enabled = false;
+    }
 }

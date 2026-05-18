@@ -15,6 +15,9 @@ public class RetrackGameManager : MonoBehaviour
     [Header("Transició")]
     [SerializeField] private float tempsEsperaDespresResultat = 1.5f;
 
+    [Header("Mapa")]
+    [SerializeField] private LoopMapa_retrack loopMapa;
+
     private int bonysXafats = 0;
     private int bonysPerduts = 0;
     private float tempsActual;
@@ -108,6 +111,7 @@ public class RetrackGameManager : MonoBehaviour
         if (jocAcabat) return;
 
         jocAcabat = true;
+        AturarJoc();
         Debug.Log("Has guanyat el minijoc retrack!");
 
         if (textVictoria != null)
@@ -123,6 +127,7 @@ public class RetrackGameManager : MonoBehaviour
         if (jocAcabat) return;
 
         jocAcabat = true;
+        AturarJoc();
         Debug.Log("Has perdut el minijoc retrack!");
 
         if (textPerdut != null)
@@ -141,5 +146,13 @@ public class RetrackGameManager : MonoBehaviour
     private void NotificarDerrotaAlGameManager()
     {
         GameFlowManager.Instance.MinijocPerdut();
+    }
+
+    private void AturarJoc()
+    {
+        if (loopMapa != null)
+        {
+            loopMapa.AturarMoviment();
+        }
     }
 }
