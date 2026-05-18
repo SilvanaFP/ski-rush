@@ -7,6 +7,17 @@ public class LoopMapa : MonoBehaviour
     [SerializeField] private float limiteSuperior = 8f;
     [SerializeField] private Transform[] chunks;
 
+    private void Start()
+    {
+        if (GameFlowManager.Instance != null)
+        {
+            MinijocRuntimeConfig config = GameFlowManager.Instance.GetConfigActual();
+            velocidad = config.velocitat;
+
+            Debug.Log("Velocitat del mapa configurada a: " + velocidad);
+        }
+    }
+
     private void Update()
     {
         for (int i = 0; i < chunks.Length; i++)
@@ -19,6 +30,7 @@ public class LoopMapa : MonoBehaviour
             if (chunks[i].position.y >= limiteSuperior)
             {
                 Transform chunkMesAbaix = BuscarChunksAbaix();
+
                 chunks[i].position = new Vector3(
                     chunks[i].position.x,
                     chunkMesAbaix.position.y - alturaChunk,
@@ -41,5 +53,10 @@ public class LoopMapa : MonoBehaviour
         }
 
         return mesAbaix;
+    }
+
+    public void AturarMoviment()
+    {
+        enabled = false;
     }
 }

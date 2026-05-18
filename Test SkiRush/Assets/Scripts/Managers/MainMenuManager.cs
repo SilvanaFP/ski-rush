@@ -1,13 +1,10 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    private string[] minijocs = { "swipe1", "drag1", "wipe1", "wipe2", "retrack", "drag2" };
-
     public void PlayGame()
     {
-        GameFlowManager.Instance.CarregarSeguentMinijoc();
+        GameFlowManager.Instance.IniciarPartida();
     }
 
     public void OpenRanking()
@@ -18,6 +15,6 @@ public class MainMenuManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-        Debug.Log("Salir del juego");
+        Debug.Log("Sortir del Joc");
     }
 }

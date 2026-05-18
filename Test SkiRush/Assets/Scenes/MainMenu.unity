@@ -119,11 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-<<<<<<< Updated upstream
---- !u!1 &393145621
-=======
 --- !u!1 &619649570
->>>>>>> Stashed changes
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,50 +127,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< Updated upstream
-  - component: {fileID: 393145622}
-  - component: {fileID: 393145624}
-  - component: {fileID: 393145623}
-  m_Layer: 5
-  m_Name: ButtonBG
-=======
   - component: {fileID: 619649571}
   - component: {fileID: 619649573}
   - component: {fileID: 619649572}
   m_Layer: 0
   m_Name: Popup
->>>>>>> Stashed changes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< Updated upstream
---- !u!224 &393145622
-=======
 --- !u!224 &619649571
->>>>>>> Stashed changes
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
-  m_GameObject: {fileID: 393145621}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1497220156}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.8511963, y: -604.4601}
-  m_SizeDelta: {x: -193.8942, y: -1935.0828}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &393145623
-=======
   m_GameObject: {fileID: 619649570}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -193,41 +161,27 @@ RectTransform:
   m_SizeDelta: {x: 1080, y: 1920}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &619649572
->>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
-  m_GameObject: {fileID: 393145621}
-=======
   m_GameObject: {fileID: 619649570}
->>>>>>> Stashed changes
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-<<<<<<< Updated upstream
-  m_Color: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
-=======
   m_Color: {r: 0.11764706, g: 0.11764706, b: 0.11764706, a: 0.392}
->>>>>>> Stashed changes
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-<<<<<<< Updated upstream
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-=======
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
->>>>>>> Stashed changes
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -236,19 +190,12 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
-<<<<<<< Updated upstream
---- !u!222 &393145624
-=======
 --- !u!222 &619649573
->>>>>>> Stashed changes
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
-  m_GameObject: {fileID: 393145621}
-=======
   m_GameObject: {fileID: 619649570}
   m_CullTransparentMesh: 1
 --- !u!1 &620388227
@@ -524,7 +471,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693112661}
->>>>>>> Stashed changes
   m_CullTransparentMesh: 1
 --- !u!1 &768132738
 GameObject:
@@ -637,17 +583,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1985419794}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< Updated upstream
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -90.386, y: -600}
-  m_SizeDelta: {x: 607.9, y: 183.28}
-=======
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
->>>>>>> Stashed changes
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &783905164
 MonoBehaviour:
@@ -716,8 +655,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 693ec906b40ef40e4b2ca34b72c7a90c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameFlowManager
-<<<<<<< Updated upstream
-=======
   minijocsOriginals:
   - swipe1
   - drag1
@@ -790,7 +727,6 @@ MonoBehaviour:
   pujarDificultatCada: 2
   gameOverPanel: {fileID: 1985419793}
   scoreText: {fileID: 620388228}
->>>>>>> Stashed changes
 --- !u!4 &845254421
 Transform:
   m_ObjectHideFlags: 0
@@ -807,8 +743,6 @@ Transform:
   - {fileID: 1624326376}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< Updated upstream
-=======
 --- !u!1 &899481296
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,7 +1145,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347218632}
   m_CullTransparentMesh: 1
->>>>>>> Stashed changes
 --- !u!1 &1497220152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,7 +1198,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.5
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1307,13 +1240,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1640182217}
-<<<<<<< Updated upstream
-  - {fileID: 393145622}
-  - {fileID: 806999475}
-=======
   - {fileID: 1202815280}
   - {fileID: 1542599087}
->>>>>>> Stashed changes
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
