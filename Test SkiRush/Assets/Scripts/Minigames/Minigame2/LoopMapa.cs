@@ -54,4 +54,9 @@ public class LoopMapa : MonoBehaviour
 
         return mesAbaix;
     }
+
+    public void AturarMoviment()
+    {
+        enabled = false;
+    }
 }

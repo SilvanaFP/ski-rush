@@ -1777,7 +1777,7 @@ Transform:
   m_GameObject: {fileID: 961588059}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.5974, y: -40, z: 0}
+  m_LocalPosition: {x: -17.99, y: -40, z: 0}
   m_LocalScale: {x: 1.2362669, y: 1.10388, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1869,6 +1869,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeguirToque_retrack
   posicioYFixe: -40
+  limitXEsquerra: -27.54
+  limitXDreta: -8.15
+  loopMapa: {fileID: 1367128652}
 --- !u!1001 &1031450298
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2384,6 +2387,8 @@ MonoBehaviour:
   textVictoria: {fileID: 171323216}
   textPerdut: {fileID: 1636787895}
   tempsEsperaDespresResultat: 1.5
+  jugador: {fileID: 0}
+  loopMapa: {fileID: 1367128652}
 --- !u!4 &1408892970
 Transform:
   m_ObjectHideFlags: 0
@@ -3833,12 +3838,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f09bf2560d51456590f4f10393462d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeguirToque
+  limitXEsquerra: -2.5
+  limitXDreta: 2.5
   tempsInvulnerableInicial: 3
   textPerdut: {fileID: 0}
   textVictoria: {fileID: 0}
   barraTemps: {fileID: 0}
   tempsVictoria: 15
   tempsEsperaDespresResultat: 1.5
+  loopMapa: {fileID: 0}
 --- !u!4 &2135646866
 Transform:
   m_ObjectHideFlags: 0

@@ -6,19 +6,40 @@ public class SeguirToque_retrack : MonoBehaviour
     private bool arrossegant = false;
     private Vector3 offset;
 
+    [Header("Posició")]
     [SerializeField] private float posicioYFixe = -4f;
+
+    [Header("Límits laterals")]
+    [SerializeField] private float limitXEsquerra = -2.5f;
+    [SerializeField] private float limitXDreta = 2.5f;
+
+    [Header("Mapa")]
+    [SerializeField] private LoopMapa_retrack loopMapa;
+
+    private bool jocAturat = false;
 
     private void Start()
     {
         camaraPrincipal = Camera.main;
+
         Time.timeScale = 1f;
 
-        transform.position = new Vector3(transform.position.x, posicioYFixe, transform.position.z);
+        transform.position = new Vector3(
+            transform.position.x,
+            posicioYFixe,
+            transform.position.z
+        );
     }
 
     private void Update()
     {
-        transform.position = new Vector3(transform.position.x, posicioYFixe, transform.position.z);
+        if (jocAturat) return;
+
+        transform.position = new Vector3(
+            transform.position.x,
+            posicioYFixe,
+            transform.position.z
+        );
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -41,12 +62,34 @@ public class SeguirToque_retrack : MonoBehaviour
             posMouse.z = 0f;
 
             Vector3 novaPos = posMouse + offset;
-            transform.position = new Vector3(novaPos.x, posicioYFixe, transform.position.z);
+
+            float xLimitada = Mathf.Clamp(
+                novaPos.x,
+                limitXEsquerra,
+                limitXDreta
+            );
+
+            transform.position = new Vector3(
+                xLimitada,
+                posicioYFixe,
+                transform.position.z
+            );
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             arrossegant = false;
+        }
+    }
+
+    public void AturarJoc()
+    {
+        jocAturat = true;
+        arrossegant = false;
+
+        if (loopMapa != null)
+        {
+            loopMapa.AturarMoviment();
         }
     }
 }
