@@ -13,6 +13,7 @@ public class TreeHit : MonoBehaviour
             touched = true;
             Debug.Log("ÁRBOL TOCADO: " + gameObject.name);
 
+            // 🔥 DEBUG VISUAL
             GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
