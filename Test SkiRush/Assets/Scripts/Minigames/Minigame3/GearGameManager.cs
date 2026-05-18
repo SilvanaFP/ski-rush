@@ -64,9 +64,25 @@ public class GearGameManager : MonoBehaviour
     void LoseGame()
     {
         gameEnded = true;
+<<<<<<< Updated upstream
         losePanel.SetActive(true);
         Debug.Log("Has perdut!");
         Invoke("TornarMenu", 2f);
+=======
+
+        bool mostrarDerrotaLocal =
+            GameFlowManager.Instance == null ||
+            GameFlowManager.Instance.GetVidesActuals() > 1;
+
+        if (mostrarDerrotaLocal && losePanel != null)
+        {
+            losePanel.SetActive(true);
+        }
+
+        Debug.Log("Has perdut el minijoc drag!");
+
+        Invoke(nameof(NotificarDerrotaAlGameManager), tempsEsperaDespresResultat);
+>>>>>>> Stashed changes
     }
 
     void CarregarSeguent()

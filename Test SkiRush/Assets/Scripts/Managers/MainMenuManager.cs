@@ -10,6 +10,11 @@ public class MainMenuManager : MonoBehaviour
         GameFlowManager.Instance.CarregarSeguentMinijoc();
     }
 
+    public void OpenRanking()
+    {
+        SceneManager.LoadScene("Ranking");
+    }
+
     public void QuitGame()
     {
         Application.Quit();

@@ -107,7 +107,11 @@ public class RetrackGameManager : MonoBehaviour
         jocAcabat = true;
         Debug.Log("Has perdut el minijoc retrack!");
 
-        if (textPerdut != null)
+        bool mostrarDerrotaLocal =
+            GameFlowManager.Instance == null ||
+            GameFlowManager.Instance.GetVidesActuals() > 1;
+
+        if (mostrarDerrotaLocal && textPerdut != null)
         {
             textPerdut.SetActive(true);
         }

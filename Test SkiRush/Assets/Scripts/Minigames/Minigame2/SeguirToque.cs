@@ -97,6 +97,24 @@ public class SeguirToque : MonoBehaviour
     
     private void CarregarSeguentMinijoc()
     {
+<<<<<<< Updated upstream
         GameFlowManager.Instance.CarregarSeguentMinijoc();
+=======
+        jocAcabat = true;
+        arrossegant = false;
+
+        Debug.Log("Has perdut!");
+
+        bool mostrarDerrotaLocal =
+            GameFlowManager.Instance == null ||
+            GameFlowManager.Instance.GetVidesActuals() > 1;
+
+        if (mostrarDerrotaLocal && textPerdut != null)
+        {
+            textPerdut.SetActive(true);
+        }
+
+        Invoke(nameof(NotificarDerrotaAlGameManager), tempsEsperaDespresResultat);
+>>>>>>> Stashed changes
     }
 }
