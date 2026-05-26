@@ -198,13 +198,10 @@ public class SeguirToque : MonoBehaviour
 
         if (mostrarDerrotaLocal && textPerdut != null)
         {
-            jocAcabat = true;
-            AturarJoc();
-
-            Debug.Log("Has perdut!");
-
-            Invoke(nameof(NotificarDerrotaAlGameManager), tempsEsperaDespresResultat);
+            textPerdut.SetActive(true);
         }
+
+        Invoke(nameof(NotificarDerrotaAlGameManager), tempsEsperaDespresResultat);
 
     }
 

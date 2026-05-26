@@ -723,7 +723,7 @@ MonoBehaviour:
     errorsPermesosBase: 1
     errorsMinims: 1
     baixarErrorsCadaNivells: 2
-  videsInicials: 1
+  videsInicials: 3
   pujarDificultatCada: 2
   gameOverPanel: {fileID: 1985419793}
   scoreText: {fileID: 620388228}

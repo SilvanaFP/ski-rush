@@ -9,6 +9,11 @@ public class RankingUI : MonoBehaviour
 
     private void Start()
     {
+        foreach (Transform child in scoresContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
         List<int> scores = RankingManager.LoadScores();
 
         for (int i = 0; i < scores.Count; i++)
@@ -22,7 +27,7 @@ public class RankingUI : MonoBehaviour
             string ordinal = GetOrdinalCatalan(i + 1);
 
             text.text =
-                ordinal + ". " + scores[i];
+                ordinal + " - " + scores[i];
         }
     }
 

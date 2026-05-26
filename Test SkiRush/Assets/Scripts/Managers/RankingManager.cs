@@ -7,6 +7,8 @@ public static class RankingManager
 
     public static void SaveScore(int score)
     {
+        Debug.Log("SAVE SCORE: " + score);
+        
         List<int> scores = LoadScores();
 
         scores.Add(score);
