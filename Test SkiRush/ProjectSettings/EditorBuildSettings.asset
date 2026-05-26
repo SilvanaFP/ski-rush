@@ -26,5 +26,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Minigames/Silvana/Scenes/drag2.unity
     guid: cf1402b43f205ae4c94913ff5e3b335b
+  - enabled: 1
+    path: Assets/Scenes/Ranking.unity
+    guid: 4f8fb18970bd57a4082d2f6a8a67cabf
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

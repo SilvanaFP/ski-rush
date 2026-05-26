@@ -115,15 +115,23 @@ public class WipeGameManager : MonoBehaviour
             cleaner.enabled = false;
         }
 
-        if (resultOverlay != null)
-        {
-            resultOverlay.SetActive(true);
-        }
+        bool mostrarDerrotaLocal =
+            won ||
+            GameFlowManager.Instance == null ||
+            GameFlowManager.Instance.GetVidesActuals() > 1;
 
-        if (resultText != null)
+        if (mostrarDerrotaLocal)
         {
-            resultText.gameObject.SetActive(true);
-            resultText.text = won ? "Has guanyat!" : "Has perdut!";
+            if (resultOverlay != null)
+            {
+                resultOverlay.SetActive(true);
+            }
+
+            if (resultText != null)
+            {
+                resultText.gameObject.SetActive(true);
+                resultText.text = won ? "Has guanyat!" : "Has perdut!";
+            }
         }
 
         if (won)

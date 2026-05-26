@@ -130,7 +130,11 @@ public class GearGameManager : MonoBehaviour
 
         gameEnded = true;
 
-        if (losePanel != null)
+        bool mostrarDerrotaLocal =
+            GameFlowManager.Instance == null ||
+            GameFlowManager.Instance.GetVidesActuals() > 1;
+
+        if (mostrarDerrotaLocal && losePanel != null)
         {
             losePanel.SetActive(true);
         }
@@ -138,6 +142,7 @@ public class GearGameManager : MonoBehaviour
         Debug.Log("Has perdut el minijoc drag!");
 
         Invoke(nameof(NotificarDerrotaAlGameManager), tempsEsperaDespresResultat);
+
     }
 
     private void NotificarVictoriaAlGameManager()
