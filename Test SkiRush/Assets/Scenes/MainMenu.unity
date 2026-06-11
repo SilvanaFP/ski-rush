@@ -4480,7 +4480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a954b79f35f48738d5911b9509fa54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ApiClient
-  baseUrl: http://127.0.0.1:8000
+  baseUrl: https://ski-rush-production.up.railway.app
 --- !u!4 &2135823448
 Transform:
   m_ObjectHideFlags: 0
