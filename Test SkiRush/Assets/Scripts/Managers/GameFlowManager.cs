@@ -245,7 +245,10 @@ public class GameFlowManager : MonoBehaviour
             minijocsCompletats
         );
 
+        SessionManager.SetLastScore(minijocsCompletats);
+
         RankingManager.SaveScore(minijocsCompletats);
+        EnviarPuntuacioOnline();
 
         Time.timeScale = 0f;
 
@@ -262,6 +265,34 @@ public class GameFlowManager : MonoBehaviour
                 "Puntuació: " +
                 minijocsCompletats;
         }
+    }
+
+    private void EnviarPuntuacioOnline()
+    {
+        if (!SessionManager.IsLoggedIn())
+        {
+            Debug.LogWarning("No hi ha usuari loguejat. No s'envia puntuació online.");
+            return;
+        }
+
+        if (ApiClient.Instance == null)
+        {
+            Debug.LogWarning("No hi ha ApiClient a l'escena. No s'envia puntuació online.");
+            return;
+        }
+
+        StartCoroutine(ApiClient.Instance.SaveScore(
+            SessionManager.UserId,
+            minijocsCompletats,
+            scoreResponse =>
+            {
+                Debug.Log("Puntuació online guardada correctament: " + scoreResponse.score);
+            },
+            error =>
+            {
+                Debug.LogWarning("Error guardant puntuació online: " + error);
+            }
+        ));
     }
 
     public void ReiniciarPartida()
