@@ -25,6 +25,9 @@ public class PathWipeGame : MonoBehaviour
     public float startTolerance = 40f;
     public float eraseRadius = 40;
 
+    [Header("Path Position")]
+    public float pathTopOffset = 120f;
+
     [Header("Lose Settings")]
     public float maxDeviation = 55;
 
@@ -405,7 +408,7 @@ public class PathWipeGame : MonoBehaviour
         {
             float t = i / 9f;
 
-            float y = Mathf.Lerp(h, 0, t);
+            float y = Mathf.Lerp(h - pathTopOffset, 0, t);
 
             float x =
                 Screen.width / 2f +
@@ -424,7 +427,7 @@ public class PathWipeGame : MonoBehaviour
         {
             float t = i / 9f;
 
-            float y = Mathf.Lerp(h, 0, t);
+            float y = Mathf.Lerp(h - pathTopOffset, 0, t);
 
             float x =
                 (i % 2 == 0)
@@ -443,7 +446,7 @@ public class PathWipeGame : MonoBehaviour
         {
             float t = i / 9f;
 
-            float y = Mathf.Lerp(h, 0, t);
+            float y = Mathf.Lerp(h - pathTopOffset, 0, t);
 
             float x = Mathf.Lerp(
                 Screen.width * 0.3f,
@@ -464,7 +467,7 @@ public class PathWipeGame : MonoBehaviour
         {
             float t = i / 11f;
 
-            float y = Mathf.Lerp(h, 0, t);
+            float y = Mathf.Lerp(h - pathTopOffset, 0, t);
 
             float x =
                 Screen.width / 2f +
