@@ -267,7 +267,7 @@ public class GameFlowManager : MonoBehaviour
         if (scoreText != null)
         {
             scoreText.text =
-                "Puntuació: " +
+                "Score: " +
                 minijocsCompletats;
         }
     }

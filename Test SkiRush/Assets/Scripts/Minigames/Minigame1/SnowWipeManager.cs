@@ -130,7 +130,7 @@ public class WipeGameManager : MonoBehaviour
             if (resultText != null)
             {
                 resultText.gameObject.SetActive(true);
-                resultText.text = won ? "Has guanyat!" : "Has perdut!";
+                resultText.text = won ? "You win!" : "You lose!";
             }
         }
 
