@@ -34,6 +34,7 @@ public class GameFlowManager : MonoBehaviour
 
     [Header("Sons")]
     [SerializeField] private AudioClip soPerdreVida;
+    [SerializeField] private AudioClip soPerdrePartida;
     [SerializeField] private AudioSource audioSource;
 
     private int videsActuals;
@@ -239,7 +240,7 @@ public class GameFlowManager : MonoBehaviour
         }
 
         gameOverExecutat = true;
-
+        ReproduirSoPerdrePartida();
         partidaIniciada = false;
 
         Debug.Log("Fi de partida.");
@@ -273,9 +274,22 @@ public class GameFlowManager : MonoBehaviour
 
     public void ReproduirSoPerdreVida()
     {
+        if (videsActuals <= 1)
+        {
+            return;
+        }
+
         if (audioSource != null && soPerdreVida != null)
         {
             audioSource.PlayOneShot(soPerdreVida);
+        }
+    }
+
+    private void ReproduirSoPerdrePartida()
+    {
+        if (audioSource != null && soPerdrePartida != null)
+        {
+            audioSource.PlayOneShot(soPerdrePartida);
         }
     }
 
