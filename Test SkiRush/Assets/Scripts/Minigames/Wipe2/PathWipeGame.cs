@@ -327,6 +327,10 @@ public class PathWipeGame : MonoBehaviour
         }
         else
         {
+            if (GameFlowManager.Instance != null)
+            {
+                GameFlowManager.Instance.ReproduirSoPerdreVida();
+            }
             Debug.Log("Has perdut el PathWipe!");
             Invoke(nameof(NotificarDerrotaAlGameManager), tempsEsperaDespresResultat);
         }

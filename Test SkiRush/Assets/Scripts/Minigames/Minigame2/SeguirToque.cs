@@ -190,6 +190,11 @@ public class SeguirToque : MonoBehaviour
         jocAcabat = true;
         arrossegant = false;
 
+        if (GameFlowManager.Instance != null)
+        {
+            GameFlowManager.Instance.ReproduirSoPerdreVida();
+        }
+
         Debug.Log("Has perdut!");
 
         bool mostrarDerrotaLocal =

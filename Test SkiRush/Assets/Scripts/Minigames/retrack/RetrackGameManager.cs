@@ -128,6 +128,11 @@ public class RetrackGameManager : MonoBehaviour
 
         jocAcabat = true;
         AturarJoc();
+
+        if (GameFlowManager.Instance != null)
+        {
+            GameFlowManager.Instance.ReproduirSoPerdreVida();
+        }
         Debug.Log("Has perdut el minijoc retrack!");
 
         bool mostrarDerrotaLocal =
