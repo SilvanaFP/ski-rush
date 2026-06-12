@@ -32,6 +32,10 @@ public class GameFlowManager : MonoBehaviour
 
     [SerializeField] private int pujarDificultatCada = 3;
 
+    [Header("Sons")]
+    [SerializeField] private AudioClip soPerdreVida;
+    [SerializeField] private AudioSource audioSource;
+
     private int videsActuals;
 
     private int dificultatActual = 1;
@@ -189,7 +193,7 @@ public class GameFlowManager : MonoBehaviour
         }
 
         videsActuals--;
-
+       
         minijocsJugats++;
 
         Debug.Log(
@@ -264,6 +268,14 @@ public class GameFlowManager : MonoBehaviour
             scoreText.text =
                 "Puntuació: " +
                 minijocsCompletats;
+        }
+    }
+
+    public void ReproduirSoPerdreVida()
+    {
+        if (audioSource != null && soPerdreVida != null)
+        {
+            audioSource.PlayOneShot(soPerdreVida);
         }
     }
 

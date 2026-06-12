@@ -141,6 +141,11 @@ public class WipeGameManager : MonoBehaviour
         }
         else
         {
+
+            if (GameFlowManager.Instance != null)
+            {
+                GameFlowManager.Instance.ReproduirSoPerdreVida();
+            }
             Debug.Log("Has perdut el minijoc wipe1!");
             Invoke(nameof(NotificarDerrotaAlGameManager), tempsEsperaDespresResultat);
         }

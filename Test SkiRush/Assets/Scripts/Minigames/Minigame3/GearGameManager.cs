@@ -130,6 +130,11 @@ public class GearGameManager : MonoBehaviour
 
         gameEnded = true;
 
+        if (GameFlowManager.Instance != null)
+        {
+            GameFlowManager.Instance.ReproduirSoPerdreVida();
+        }
+
         bool mostrarDerrotaLocal =
             GameFlowManager.Instance == null ||
             GameFlowManager.Instance.GetVidesActuals() > 1;
