@@ -2149,10 +2149,10 @@ MonoBehaviour:
   timeBarFill: {fileID: 162999448}
   resultText: {fileID: 1552145299}
   resultOverlay: {fileID: 111063417}
-  startTolerance: 40
-  eraseRadius: 30
-  pathTopOffset: 120
-  maxDeviation: 50
+  startTolerance: 60
+  eraseRadius: 110
+  pathTopOffsetPercent: 0.18
+  maxDeviation: 120
   timeLimit: 5
   tempsEsperaDespresResultat: 1.5
   currentPattern: 0
@@ -6859,8 +6859,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 0, b: 0.049137115, a: 1}
+      key1: {r: 1, g: 0, b: 0.049137115, a: 1}
       key2: {r: 1, g: 1, b: 1, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -7351,9 +7351,9 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0, g: 1, b: 0.03812504, a: 1}
+      key1: {r: 0, g: 1, b: 0.03812504, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -7368,8 +7368,8 @@ LineRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 65535
-      atime2: 0
+      atime1: 34888
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
@@ -7378,7 +7378,7 @@ LineRenderer:
       m_Mode: 0
       m_ColorSpace: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 2
+      m_NumAlphaKeys: 3
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
