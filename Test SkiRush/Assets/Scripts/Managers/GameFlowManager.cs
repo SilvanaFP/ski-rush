@@ -167,7 +167,7 @@ public class GameFlowManager : MonoBehaviour
             minijocActual
         );
 
-        SceneManager.LoadScene(minijocActual);
+        SceneManager.LoadScene("TransitionScene");
     }
 
     public void MinijocGuanyat()
