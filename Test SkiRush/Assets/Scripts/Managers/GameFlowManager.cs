@@ -37,6 +37,14 @@ public class GameFlowManager : MonoBehaviour
     [SerializeField] private AudioClip soPerdrePartida;
     [SerializeField] private AudioSource audioSource;
 
+    [Header("Música")]
+    [SerializeField] private AudioClip musicaPartida;
+    [SerializeField] private AudioSource musicaSource;
+
+    [Header("Música menú")]
+    [SerializeField] private AudioClip musicaMenu;
+    [SerializeField] private AudioSource musicaMenuSource;
+
     private int videsActuals;
 
     private int dificultatActual = 1;
@@ -70,6 +78,7 @@ public class GameFlowManager : MonoBehaviour
             {
                 gameOverPanel.SetActive(false);
             }
+            ReproduirMusicaMenu();
         }
         else
         {
@@ -121,6 +130,10 @@ public class GameFlowManager : MonoBehaviour
     public void IniciarPartida()
     {
         Time.timeScale = 1f;
+
+        AturarMusicaMenu();
+
+        ReproduirMusicaPartida();
 
         videsActuals = videsInicials;
 
@@ -241,6 +254,7 @@ public class GameFlowManager : MonoBehaviour
 
         gameOverExecutat = true;
         ReproduirSoPerdrePartida();
+        AturarMusicaPartida();
         partidaIniciada = false;
 
         Debug.Log("Fi de partida.");
@@ -269,6 +283,27 @@ public class GameFlowManager : MonoBehaviour
             scoreText.text =
                 "Score: " +
                 minijocsCompletats;
+        }
+    }
+
+    private void ReproduirMusicaMenu()
+    {
+        if (musicaMenuSource == null || musicaMenu == null) return;
+
+        if (!musicaMenuSource.isPlaying)
+        {
+            musicaMenuSource.clip = musicaMenu;
+            musicaMenuSource.loop = true;
+            musicaMenuSource.volume = 0.3f;
+            musicaMenuSource.Play();
+        }
+    }
+
+    private void AturarMusicaMenu()
+    {
+        if (musicaMenuSource != null && musicaMenuSource.isPlaying)
+        {
+            musicaMenuSource.Stop();
         }
     }
 
@@ -336,7 +371,8 @@ public class GameFlowManager : MonoBehaviour
     public void TornarMenu()
     {
         Time.timeScale = 1f;
-
+        AturarMusicaPartida();
+        ReproduirMusicaMenu();
         partidaIniciada = false;
 
         if (gameOverPanel != null)
@@ -431,6 +467,26 @@ public class GameFlowManager : MonoBehaviour
         configDefecte.nomEscena = nomEscena;
 
         return configDefecte;
+    }
+
+    private void ReproduirMusicaPartida()
+    {
+        if (musicaSource == null || musicaPartida == null) return;
+
+        if (!musicaSource.isPlaying)
+        {
+            musicaSource.clip = musicaPartida;
+            musicaSource.loop = true;
+            musicaSource.Play();
+        }
+    }
+
+    private void AturarMusicaPartida()
+    {
+        if (musicaSource != null && musicaSource.isPlaying)
+        {
+            musicaSource.Stop();
+        }
     }
 
     public string GetMinijocActual()
