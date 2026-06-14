@@ -1,0 +1,12 @@
+# ninja log v5
+62	606	8031603307885762	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	b0206f05152c3311
+608	879	8031603310541041	C:/Users/Pere Roca/Desktop/UNI/TERCERO/SkiRush/ski-rush/Test SkiRush/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/48552c13/obj/arm64-v8a/libswappywrapper.so	9d57c7264cdc7571
+36	2208	8031603323975822	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	9aba41d4c054c7ab
+20	2233	8031603324247132	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	10ac1487c17cc762
+14	2254	8031603324444303	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	f1637f32b09473a2
+44	2272	8031603324609022	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	dcd5e8486dcd9a55
+9	2336	8031603325260256	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	c5a76a3396a9d577
+53	2598	8031603327889087	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	442d256f8179b785
+27	2638	8031603328283860	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	72505fd30af6e7c7
+1	2776	8031603329633169	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	5f75b0fc5a53956f
+2776	2883	8031603330762912	C:/Users/Pere Roca/Desktop/UNI/TERCERO/SkiRush/ski-rush/Test SkiRush/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/48552c13/obj/arm64-v8a/libgame.so	7ab86ee2d4b78739
